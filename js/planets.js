@@ -9,12 +9,33 @@
     // 	</figure>
     // </div>
 
-$(document).ready(function() {
-    var bootstrapButton = $.fn.button.noConflict(); 
-	$.fn.bootstrapBtn = bootstrapButton;
+$(function () {
 
-    // Write your code here
-
+    $("#dialog").hide();
     
+    $.getJSON("https://api.visibleplanets.dev/v3?latitude=12&longitude=-981", function(response) {
+
+            response.data.forEach(function(body) {
+
+                var card = `
+                <div class="entry" 
+                    data-name="${body.name}"
+                    data-constellation="${body.constellation}"
+                    data-altitude="${body.altitude}"
+                    data-azimuth="${body.azimuth}">
+                    
+                    <figure>
+                        <img src="images/${body.name.toLowerCase()}.png" alt="${body.name}">
+                        <figcaption>${body.name}</figcaption>
+                    </figure>
+
+                </div>
+                `;
+
+                $("#planet-container").append(card);
+
+            });
+
+        });
 
 });
